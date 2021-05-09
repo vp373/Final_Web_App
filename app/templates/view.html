@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="m-5 p-2">
+    <h5 class="card-title">Data for Selected Record</h5>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Index: {{ index.fldIndex }}</li>
+        <li class="list-group-item">Length of eruption in mins: {{ index.fldEruptionLengthInMins }}</li>
+        <li class="list-group-item">Wait for eruption in mins: {{ index.fldEruptionWaitInMins }}</li>
+    </ul>
+    <div class="card-body">
+        <a href="/edit/{{index.id}}" class="card-link btn btn-primary">Edit</a>
+    </div>
+</div>
+<form action="/delete/{{index.id}}" method="post"><button type="submit" class="btn btn-danger">Delete</button></form>
+
+
+{% endblock %}

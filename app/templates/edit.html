@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/edit/{{index.id}}" method="post">
+    <div class="row">
+        <div class="col">
+            <label for="fldIndex">Index</label>
+            <input id="fldIndex" type="number" class="form-control" placeholder="Index" name="fldIndex" value="{{index.fldIndex}}">
+        </div>
+        <div class="col">
+            <label for="fldEruptionWaitInMins">EruptionWaitInMins</label>
+            <input id="fldEruptionWaitInMins" type="number" class="form-control" placeholder="EruptionWaitInMins"
+                   name="fldEruptionWaitInMins" value="{{index.fldEruptionWaitInMins}}">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="fldEruptionLengthInMins">EruptionLengthInMins</label>
+            <input id="fldEruptionLengthInMins" type="number" class="form-control" placeholder="EruptionLengthInMins" name="fldEruptionLengthInMins" value="{{index.fldEruptionLengthInMins}}">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+
+</form>
+{% endblock %}
