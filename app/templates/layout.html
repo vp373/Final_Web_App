@@ -16,11 +16,10 @@
     {% else %}
     <title>Welcome to My Site!</title>
     {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <head>
  <body>
 <!-- As a heading -->
-
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
   <a class="navbar-brand" href="/">{% if user %}{{ user.username }}'s Homepage{% else %}
     <title>Welcome to My Homepage</title>
@@ -33,13 +32,17 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/chart">Chart <span class="sr-only"></span></a>
+        </li>
+
       <li class="nav-item active">
-        <a class="nav-link" href="/faithful/new">New Data <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="api/faithful">Data API JSON endpoint <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="api/v1/faithful">Data API JSON endpoint <span class="sr-only">(current)</span></a>
       </li>
 
+        <li class="nav-item active">
+          <a class="btn btn-success pl-2 lr-2 ml-3" href="/faithful/new">Add Data<span class="sr-only"></span></a>
+      </li>
     </ul>
   </div>
 </nav>

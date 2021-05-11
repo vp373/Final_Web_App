@@ -18,12 +18,29 @@ mysql.init_app(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    user = {'username': 'Data Project'}
+    user = {'username': 'Vaibhav'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport')
     result = cursor.fetchall()
     return render_template('index.html', title='Home', user=user, faithful=result)
 
+@app.route('/chart', methods=['GET'])
+def charts_view():
+    user = {'username': 'Vaibhav'}
+    eruption_legend = 'Eruption Data'
+    eruption_labels = []
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC')
+    for fldEruptionLengthInMins in cursor.fetchall():
+        eruption_labels.append(list(fldEruptionLengthInMins.values())[0])
+    eruption_values = []
+    cursor.execute('SELECT fldEruptionWaitInMins FROM tblFaithfulImport')
+    for fldEruptionWaitInMins in cursor.fetchall():
+        eruption_values.append(list(fldEruptionWaitInMins.values())[0])
+    cursor.execute('SELECT * FROM tblFaithfulImport')
+    result = cursor.fetchall()
+    return render_template('chart.html', title='Home', user=user, faithful=result, eruption_labels=eruption_labels, eruption_legend=eruption_legend,
+                           eruption_values=eruption_values)
 
 @app.route('/view/<int:index_id>', methods=['GET'])
 def record_view(index_id):
