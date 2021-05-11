@@ -34,14 +34,16 @@ mail = Mail(app)
 def index():
     return render_template("login.html")
 
+
 @app.route('/index', methods=['GET'])
 def index_homepage():
-    user = {'username': 'Data Project'}
+    user = {'username': 'Vaibhav'}
 
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport')
     result = cursor.fetchall()
     return render_template('index.html', title='Home', user=user, faithful=result)
+
 
 @app.route('/chart', methods=['GET'])
 def charts_view():
@@ -49,7 +51,8 @@ def charts_view():
     eruption_legend = 'Eruption Data'
     eruption_labels = []
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC LIMIT 50')
+    cursor.execute(
+        'SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC LIMIT 50')
     for fldEruptionLengthInMins in cursor.fetchall():
         eruption_labels.append(list(fldEruptionLengthInMins.values())[0])
     eruption_values = []
@@ -58,8 +61,10 @@ def charts_view():
         eruption_values.append(list(fldEruptionWaitInMins.values())[0])
     cursor.execute('SELECT * FROM tblFaithfulImport')
     result = cursor.fetchall()
-    return render_template('chart.html', title='Home', user=user, faithful=result, eruption_labels=eruption_labels, eruption_legend=eruption_legend,
+    return render_template('chart.html', title='Home', user=user, faithful=result, eruption_labels=eruption_labels,
+                           eruption_legend=eruption_legend,
                            eruption_values=eruption_values)
+
 
 @app.route('/login', methods=['POST'])
 def index_login():
@@ -115,7 +120,7 @@ def profile():
 
 @app.route('/view/<int:index_id>', methods=['GET'])
 def record_view(index_id):
-    user = {'username': 'Mike'}
+    user = {'username': 'Vaibhav'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport WHERE id=%s', index_id)
     result = cursor.fetchall()
@@ -124,7 +129,7 @@ def record_view(index_id):
 
 @app.route('/edit/<int:index_id>', methods=['GET'])
 def form_edit_get(index_id):
-    user = {'username': 'Mike'}
+    user = {'username': 'Vaibhav'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport WHERE id=%s', index_id)
     result = cursor.fetchall()
@@ -145,7 +150,7 @@ def form_update_post(index_id):
 
 @app.route('/faithful/new', methods=['GET'])
 def form_insert_get():
-    user = {'username': 'Mike'}
+    user = {'username': 'Vaibhav'}
     return render_template('new.html', title='New Entry Form', user=user)
 
 
