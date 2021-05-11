@@ -19,7 +19,7 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'faithfulData'
 mysql.init_app(app)
 
-app.config['SECRET_KEY'] = 'top-secret!'
+app.config['SECRET_KEY'] = 'data'
 app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
