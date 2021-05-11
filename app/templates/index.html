@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<table class="table">
+<body style=" background-color: floralwhite">
+<table class="table" style="color:darkred">
     <thead>
     <tr>
         <th scope="col">Index</th>
-        <th scope="col">EruptionLengthInMins</th>
-        <th scope="col">EruptionWaitInMins</th>
+        <th scope="col">Eruption Length (Mins)</th>
+        <th scope="col">Eruption Wait (Mins)</th>
     </tr>
     </thead>
     <tbody>
@@ -18,4 +19,5 @@
     {% endfor %}
     </tbody>
 </table>
+</body>
 {% endblock %}
