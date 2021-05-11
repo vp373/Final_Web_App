@@ -2,25 +2,27 @@
 {% block content %}
 <body style=" background-color: floralwhite;color:darkred">
 <form action="/faithful/new" method="POST">
+    <br>
     <div class="row">
         <div class="col">
             <label for="fldIndex">Index</label>
             <input id="fldIndex" type="number" class="form-control" placeholder="Index" name="fldIndex">
         </div>
         <div class="col">
-            <label for="fldEruptionWaitInMins">EruptionWaitInMins</label>
-            <input id="fldEruptionWaitInMins" type="text" class="form-control" placeholder="EruptionWaitInMins"
+            <label for="fldEruptionWaitInMins">Eruption Wait (Mins)</label>
+            <input id="fldEruptionWaitInMins" type="text" class="form-control" placeholder="Eruption Wait in minutes"
                    name="fldEruptionWaitInMins">
         </div>
     </div>
-
+<br>
     <div class="row">
         <div class="col">
-            <label for="fldEruptionLengthInMins">EruptionLengthInMins</label>
-            <input id="fldEruptionLengthInMins" type="text" class="form-control" placeholder="EruptionLengthInMins" name="fldEruptionLengthInMins">
+            <label for="fldEruptionLengthInMins">Eruption Length (Mins)</label>
+            <input id="fldEruptionLengthInMins" type="text" class="form-control" placeholder="Eruption Length in minutes" name="fldEruptionLengthInMins">
         </div>
     </div>
-    <button type="submit" class="btn btn-success">Create</button>
+    <br>
+        <button type="submit" class="btn btn-success">Create</button>
 
 </form>
 </body>
