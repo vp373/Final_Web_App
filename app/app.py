@@ -1,9 +1,13 @@
 from typing import List, Dict
+import os
 import simplejson as json
-from flask import Flask, request, Response, redirect
+from flask import Flask, request, Response, redirect, session, url_for, flash
 from flask import render_template
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+from sqlalchemy import create_engine
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
@@ -15,9 +19,24 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'faithfulData'
 mysql.init_app(app)
 
+app.config['SECRET_KEY'] = 'top-secret!'
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = os.environ.get('SENDGRID_API_KEY')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
+app.config['MAIL_SENDER'] = os.environ.get('MAIL_SENDER')
+mail = Mail(app)
 
-@app.route('/', methods=['GET'])
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template("login.html")
+
+
+@app.route('/index', methods=['GET'])
+def index_homepage():
     user = {'username': 'Data Project'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport')
@@ -25,20 +44,74 @@ def index():
     return render_template('index.html', title='Home', user=user, faithful=result)
 
 
+@app.route('/login', methods=['POST'])
+def index_login():
+    if 'fldEmail' in request.form and 'fldPassword' in request.form:
+        fldEmail = request.form['fldEmail']
+        fldPassword = request.form['fldPassword']
+        cursor = mysql.get_db().cursor()
+        cursor.execute("SELECT * FROM tblUsersImport WHERE fldEmail=%s AND fldPassword=%s", (fldEmail, fldPassword))
+        info = cursor.fetchone()
+        print(info)
+        if info is not None:
+            if info['fldEmail'] == fldEmail and info['fldPassword'] == fldPassword:
+                username = info['fldName']
+                string01 = "{'username': '"
+                string02 = "'}"
+                user = string01 + username + string02
+                return render_template("profile.html", user=user)
+        else:
+            return render_template("login.html")
+    return render_template("login.html")
+
+@app.route('/new', methods=['GET'])
+def form_register_get():
+    return render_template('register.html')
+
+
+@app.route('/new', methods=['POST'])
+def form_register_post():
+    recipient = request.form['email']
+    msg = Message('Registration for Final Web Application successful', recipients=[recipient])
+    msg.body = ('Congratulations! You have successfully registered to the Final Web Application '
+                'Regards,'
+                'Vinit Santani and Vaibhav Pothireddy')
+    msg.html = ('<h1>Final Web Application</h1>'
+                '<p>Congratulations! You have successfully register to our final project '
+                '<b>IS 601 - Final Web Application</b>! '
+                'by '
+                '<b>Vinit Santani and Vaibhav Pothireddy</b></p>')
+    mail.send(msg)
+    flash(f'A registration message was sent to {recipient}.')
+    cursor = mysql.get_db().cursor()
+    inputData = (request.form.get('fldName'), request.form.get('fldEmail'), request.form.get('fldPassword'))
+    sql_insert_query = """INSERT INTO tblUsersImport (fldName, fldEmail, fldPassword) VALUES (%s,%s,%s) """
+    cursor.execute(sql_insert_query, inputData)
+    mysql.get_db().commit()
+    return redirect("/", code=302)
+
+
+@app.route('/profile')
+def profile():
+    return render_template("profile.html")
+
+
 @app.route('/view/<int:index_id>', methods=['GET'])
 def record_view(index_id):
+    user = {'username': 'Mike'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport WHERE id=%s', index_id)
     result = cursor.fetchall()
-    return render_template('view.html', title='View Form', index=result[0])
+    return render_template('view.html', title='View Form', user=user, index=result[0])
 
 
 @app.route('/edit/<int:index_id>', methods=['GET'])
 def form_edit_get(index_id):
+    user = {'username': 'Mike'}
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport WHERE id=%s', index_id)
     result = cursor.fetchall()
-    return render_template('edit.html', title='Edit Form', index=result[0])
+    return render_template('edit.html', title='Edit Form', user=user, index=result[0])
 
 
 @app.route('/edit/<int:index_id>', methods=['POST'])
@@ -50,12 +123,13 @@ def form_update_post(index_id):
     t.fldEruptionWaitInMins = %s WHERE t.id = %s """
     cursor.execute(sql_update_query, input_data)
     mysql.get_db().commit()
-    return redirect("/", code=302)
+    return redirect("/index", code=302)
 
 
 @app.route('/faithful/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New Entry Form')
+    user = {'username': 'Mike'}
+    return render_template('new.html', title='New Entry Form', user=user)
 
 
 @app.route('/faithful/new', methods=['POST'])
@@ -67,7 +141,7 @@ def form_insert_post():
     VALUES (%s, %s,%s) """
     cursor.execute(sql_insert_query, input_data)
     mysql.get_db().commit()
-    return redirect("/", code=302)
+    return redirect("/index", code=302)
 
 
 @app.route('/delete/<int:index_id>', methods=['POST'])
@@ -76,7 +150,7 @@ def form_delete_post(index_id):
     sql_delete_query = """DELETE FROM tblFaithfulImport WHERE id = %s """
     cursor.execute(sql_delete_query, index_id)
     mysql.get_db().commit()
-    return redirect("/", code=302)
+    return redirect("/index", code=302)
 
 
 @app.route('/api/v1/faithful', methods=['GET'])
