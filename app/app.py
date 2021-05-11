@@ -62,7 +62,6 @@ def index_login():
                 return render_template("profile.html", user=user)
         else:
             return render_template("login.html")
-    return render_template("login.html")
 
 
 @app.route('/new', methods=['GET'])
@@ -72,7 +71,7 @@ def form_register_get():
 
 @app.route('/new', methods=['POST'])
 def form_register_post():
-    recipient = request.form['email']
+    recipient = request.form['fldEmail']
     msg = Message('Registration for Final Web Application successful', recipients=[recipient])
     msg.body = ('Congratulations! You have successfully registered to the Final Web Application '
                 'Regards,'
