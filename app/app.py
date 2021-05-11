@@ -30,7 +30,7 @@ def charts_view():
     eruption_legend = 'Eruption Data'
     eruption_labels = []
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC')
+    cursor.execute('SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC LIMIT 50')
     for fldEruptionLengthInMins in cursor.fetchall():
         eruption_labels.append(list(fldEruptionLengthInMins.values())[0])
     eruption_values = []
