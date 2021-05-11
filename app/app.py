@@ -34,15 +34,32 @@ mail = Mail(app)
 def index():
     return render_template("login.html")
 
-
 @app.route('/index', methods=['GET'])
 def index_homepage():
     user = {'username': 'Data Project'}
+
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM tblFaithfulImport')
     result = cursor.fetchall()
     return render_template('index.html', title='Home', user=user, faithful=result)
 
+@app.route('/chart', methods=['GET'])
+def charts_view():
+    user = {'username': 'Vaibhav'}
+    eruption_legend = 'Eruption Data'
+    eruption_labels = []
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT fldEruptionLengthInMins FROM tblFaithfulImport ORDER BY fldEruptionLengthInMins ASC LIMIT 50')
+    for fldEruptionLengthInMins in cursor.fetchall():
+        eruption_labels.append(list(fldEruptionLengthInMins.values())[0])
+    eruption_values = []
+    cursor.execute('SELECT fldEruptionWaitInMins FROM tblFaithfulImport')
+    for fldEruptionWaitInMins in cursor.fetchall():
+        eruption_values.append(list(fldEruptionWaitInMins.values())[0])
+    cursor.execute('SELECT * FROM tblFaithfulImport')
+    result = cursor.fetchall()
+    return render_template('chart.html', title='Home', user=user, faithful=result, eruption_labels=eruption_labels, eruption_legend=eruption_legend,
+                           eruption_values=eruption_values)
 
 @app.route('/login', methods=['POST'])
 def index_login():
