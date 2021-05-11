@@ -64,6 +64,7 @@ def index_login():
             return render_template("login.html")
     return render_template("login.html")
 
+
 @app.route('/new', methods=['GET'])
 def form_register_get():
     return render_template('register.html')
