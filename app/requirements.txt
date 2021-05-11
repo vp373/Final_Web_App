@@ -1,4 +1,9 @@
-Flask
+flask
+flask-mysql
 mysql-connector
 simplejson
-flask-mysql
+flask-sqlalchemy
+flask-login
+flask-mail
+pymysql
+python-dotenv

@@ -1,0 +1,41 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="/login" method="POST">
+            <div class="row">
+                <div class="col">
+                    <label for="fldEmail">Email</label><br>
+                    <input id="fldEmail" type="email" class="form-control" placeholder="@example.com" name="fldEmail"><br><br>
+                </div>
+                <div class="col">
+                    <label for="fldPassword">Password</label><br>
+                    <input id="fldPassword" name="fldPassword" class="form-control" type="password" placeholder="Password"><br><br>
+                </div>
+            </div>
+             <input type="submit" value="LOGIN"><br><br>
+        </form>
+        <div>
+                <label> Don't have an Account?</label>
+                <a class="btn btn-success pl-2 lr-2 ml-3" href="/new"><span class="sr-only">Register Here</span></a>
+        </div>
+        <div id="footer">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                crossorigin="anonymous"></script>
+       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+               integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+               crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ"
+                crossorigin="anonymous"></script>
+        </div>
+    </body>
+</html>

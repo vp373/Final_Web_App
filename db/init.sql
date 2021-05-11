@@ -282,3 +282,15 @@ INSERT INTO tblFaithfulImport (fldIndex, fldEruptionLengthInMins, fldEruptionWai
     (270,4.417,90),
     (271,1.817,46),
     (272,4.467,74);
+
+CREATE TABLE IF NOT EXISTS tblUsersImport (
+    `id` int AUTO_INCREMENT,
+    `fldName` CHAR (50),
+    `fldEmail` VARCHAR(21) CHARACTER SET utf8,
+    `fldPassword` VARCHAR(21) CHARACTER SET utf8,
+    PRIMARY KEY (`id`)
+);
+INSERT INTO tblUsers (fldName, fldEmail, fldPassword) VALUES
+    ('Vinit','123@gmail.com',123),
+    ('Vaibhav','456@gmail.com',456),
+    ('Mike','789@gmail.com',789);
