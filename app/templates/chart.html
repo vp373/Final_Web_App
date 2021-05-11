@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
+<body style=" background-color: floralwhite;color:darkred">
 <br>
     <div class="container">
         <h2 style="text-align:center">Faithful Eruptions</h2>
@@ -11,6 +11,9 @@
             <h5 style="text-align:center">Eruption Length vs Wait Time</h5>
         </div>
     </div>
+        <div>
+            <p style="text-align:center">This chart displays 50 data points of Old Faithful's eruptions. The x axis shows the length of the eruption while the y axis shows the wait time in between eruptions. Click on the legend to toggle the data on or off!</p>
+        </div>
     <div class="row">
         <div class="col">
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
@@ -47,4 +50,5 @@
     </div>
 </div>
 <br>
+</body>
 {% endblock %}

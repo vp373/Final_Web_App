@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<body style=" background-color: floralwhite;color:darkred">
 <form action="/edit/{{index.id}}" method="post">
     <div class="row">
         <div class="col">
@@ -22,4 +23,5 @@
     <button type="submit" class="btn btn-success">Save</button>
 
 </form>
+</body>
 {% endblock %}
