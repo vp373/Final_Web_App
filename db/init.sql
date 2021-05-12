@@ -284,9 +284,9 @@ INSERT INTO tblFaithfulImport (fldIndex, fldEruptionLengthInMins, fldEruptionWai
     (272,4.467,74);
 CREATE TABLE IF NOT EXISTS tblUsersImport (
     `id` int AUTO_INCREMENT,
-    `fldName` CHAR (50),
-    `fldEmail` VARCHAR(21) CHARACTER SET utf8,
-    `fldPassword` VARCHAR(21) CHARACTER SET utf8,
+    `fldName` CHAR (250),
+    `fldEmail` VARCHAR(250) CHARACTER SET utf8,
+    `fldPassword` VARCHAR(250) CHARACTER SET utf8,
     PRIMARY KEY (`id`)
 );
 INSERT INTO tblUsersImport (fldName, fldEmail, fldPassword) VALUES

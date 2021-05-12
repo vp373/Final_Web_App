@@ -11,6 +11,7 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
+app.secret_key = '12345'
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -25,8 +26,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'apikey'
 app.config['MAIL_PASSWORD'] = os.environ.get('SENDGRID_API_KEY')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
-app.config['MAIL_SENDER'] = os.environ.get('MAIL_SENDER')
+app.config['MAIL_DEFAULT_SENDER'] = 'vs46@njit.edu'
 mail = Mail(app)
 
 
@@ -104,7 +104,7 @@ def form_register_post():
                 'by '
                 '<b>Vinit Santani and Vaibhav Pothireddy</b></p>')
     mail.send(msg)
-    flash(f'A registration message was sent to {recipient}.')
+    flash('A registration message was sent to {recipient}.')
     cursor = mysql.get_db().cursor()
     inputData = (request.form.get('fldName'), request.form.get('fldEmail'), request.form.get('fldPassword'))
     sql_insert_query = """INSERT INTO tblUsersImport (fldName, fldEmail, fldPassword) VALUES (%s,%s,%s) """
